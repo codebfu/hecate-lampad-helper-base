@@ -1,0 +1,32 @@
+[package]
+name = "hecate-lampad-helper-base"
+description = "Shared policy primitives and IPC wire protocol for Hecate lampad helpers"
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.93"
+license = "GPL-3.0-or-later"
+authors = ["Gaultier HUBERT"]
+
+[features]
+default = ["ipc"]
+ipc = ["dep:serde", "dep:serde_json", "dep:tokio", "dep:uuid", "dep:rand", "dep:hex", "dep:subtle"]
+
+[dependencies]
+thiserror = "2"
+serde = { version = "1", features = ["derive"], optional = true }
+serde_json = { version = "1", optional = true }
+tokio = { version = "1", features = ["io-util"], optional = true }
+uuid = { version = "1", features = ["v4"], optional = true }
+rand = { version = "0.8", optional = true }
+hex = { version = "0.4", optional = true }
+subtle = { version = "2", optional = true }
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.58", features = [
+  "Win32_Foundation",
+  "Win32_Security",
+  "Win32_Security_Authorization",
+] }

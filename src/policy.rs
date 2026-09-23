@@ -17,8 +17,26 @@ const ELEVATION_WRAPPER_BINARIES: &[&str] = &[
     "/usr/sbin/sudo",
     "/usr/bin/pkexec",
     "/bin/pkexec",
+    "/usr/bin/su",
+    "/bin/su",
+    "/usr/bin/doas",
+    "/bin/doas",
+    "/usr/sbin/runuser",
+    "/usr/bin/runuser",
+    "/usr/bin/sudoedit",
+    "/bin/sudoedit",
+    "/usr/bin/machinectl",
+    "/bin/machinectl",
+    "/usr/bin/systemd-run",
+    "/bin/systemd-run",
     "sudo",
     "pkexec",
+    "su",
+    "doas",
+    "runuser",
+    "sudoedit",
+    "machinectl",
+    "systemd-run",
     "runas",
     "runas.exe",
 ];
@@ -319,6 +337,15 @@ mod tests {
         let allowed = vec!["/usr/bin/uptime".into()];
         check_shell_policy(&["/usr/bin/uptime".into()], &allowed).unwrap();
         check_shell_policy(&["/bin/sh".into()], &allowed).unwrap_err();
+    }
+
+    #[test]
+    fn rejects_extended_elevation_wrappers() {
+        for wrapper in ["su", "doas", "runuser", "sudoedit", "machinectl", "systemd-run"] {
+            check_elevation_wrapper_denied(&[wrapper.into()]).unwrap_err();
+        }
+        check_elevation_wrapper_denied(&["/usr/bin/doas".into()]).unwrap_err();
+        check_elevation_wrapper_denied(&["/usr/bin/uptime".into()]).unwrap();
     }
 
     #[test]

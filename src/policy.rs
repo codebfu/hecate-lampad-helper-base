@@ -29,6 +29,13 @@ const ELEVATION_WRAPPER_BINARIES: &[&str] = &[
     "/bin/machinectl",
     "/usr/bin/systemd-run",
     "/bin/systemd-run",
+    "/usr/sbin/sysadminctl",
+    "/usr/bin/sysadminctl",
+    "/usr/sbin/dseditgroup",
+    "/usr/bin/dseditgroup",
+    "/usr/bin/dscl",
+    "/usr/sbin/installer",
+    "/usr/bin/installer",
     "sudo",
     "pkexec",
     "su",
@@ -39,6 +46,10 @@ const ELEVATION_WRAPPER_BINARIES: &[&str] = &[
     "systemd-run",
     "runas",
     "runas.exe",
+    "sysadminctl",
+    "dseditgroup",
+    "dscl",
+    "installer",
 ];
 
 /// Environment variables that must never be injected even with a wildcard allowlist.
